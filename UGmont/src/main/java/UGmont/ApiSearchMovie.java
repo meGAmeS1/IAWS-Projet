@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
  * Root resource (exposed at "myresource" path)
  */
 @Path("api")
-public class MyResource {
+public class ApiSearchMovie {
     private static final String API_URL = "http://www.omdbapi.com/?";
 
     /**
