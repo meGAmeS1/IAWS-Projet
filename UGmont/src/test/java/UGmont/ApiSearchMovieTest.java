@@ -22,6 +22,7 @@ public class ApiSearchMovieTest {
 
     private HttpServer server;
     private WebTarget target;
+    private ApiSearchMovie apiSearchMovie;
 
     @Before
     public void setUp() throws Exception {
@@ -37,6 +38,8 @@ public class ApiSearchMovieTest {
         // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
 
         target = c.target(Main.BASE_URI);
+
+        apiSearchMovie = new ApiSearchMovie();
     }
 
     @After
@@ -46,11 +49,11 @@ public class ApiSearchMovieTest {
 
     /* Teste le cas ou on renseigne les parametres "titre" (Matrix) et "annee" (2003) */
     @Test
-    public void testTitreAnnee() {
+    public void testGetFilmsTitreAnnee() {
 
         String titre = "Matrix";
         String annee = "2003";
-        DOMSource responseMsg = target.path("api/films").queryParam("titre", titre).queryParam("annee", annee).request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        DOMSource responseMsg = apiSearchMovie.getFilms(titre, annee);
 
         String[][] attributes = {{"Title", titre}, {"Year", annee}};
 
@@ -60,16 +63,29 @@ public class ApiSearchMovieTest {
 
     /* Teste le cas ou on ne renseigne que le parametre "titre" (Matrix)*/
     @Test
-    public void testTitre() {
+    public void testGetFilmsTitre() {
 
         String titre = "Matrix";
 
-        DOMSource responseMsg = target.path("api/films").queryParam("titre", titre).request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        DOMSource responseMsg = apiSearchMovie.getFilms(titre, null);
 
         String[][] attributes = {{"Title", titre}};
 
         boolean res = templateTest(responseMsg, attributes);
         assertEquals(true, res);
+    }
+
+    /* Teste un cas où il n'y a pas de films*/
+    @Test
+    public void testNotGetFilms() {
+
+        String titre = "Matrix";
+        String annee = "1990";
+
+        DOMSource responseMsg = apiSearchMovie.getFilms(titre, annee);
+
+        boolean res = templateTest(responseMsg, null);
+        assertEquals(false,res);
     }
 
     /* Utilisee pour verifier les valeurs de certains attributs de chaque film */
