@@ -1,5 +1,10 @@
 package UGmont.database;
 
+import org.h2.tools.RunScript;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,7 +13,9 @@ import java.sql.SQLException;
  * Created by flemoal on 01/04/15.
  */
 public class DbUtil {
-    private final static String BDD_PATH = "../bdd";
+    public final static String BDD_URL = String.format("jdbc:h2:mem:%s", "ugmont_db");
+
+
     private static DbUtil instance = new DbUtil();
     private Connection conn;
     private DbUtil() {
@@ -23,15 +30,25 @@ public class DbUtil {
 
     private void connectDataBase() throws ClassNotFoundException, SQLException {
         Class.forName("org.h2.Driver");
-        conn = DriverManager.getConnection("jdbc:h2:" + BDD_PATH, "sa", "");
+        conn = DriverManager.getConnection(BDD_URL, "sa", "");
     }
 
-    private void closeDatabase() throws SQLException {
+    public void closeDatabase() throws SQLException {
         conn.close();
     }
 
     public static DbUtil getInstance() {
         return instance;
+    }
+
+    public void initializeBase() {
+        try {
+            RunScript.execute(conn, new FileReader("./scriptBdd.sql"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

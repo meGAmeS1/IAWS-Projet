@@ -8,6 +8,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.xml.transform.dom.DOMSource;
 
 @Path("api")
 public class ApiSearchMovie {
@@ -22,18 +23,18 @@ public class ApiSearchMovie {
     @GET
     @Path("films")
     @Produces(MediaType.APPLICATION_XML)
-    public String getFilms(@QueryParam("titre") String titre, @QueryParam("annee") String annee) {
+    public DOMSource getFilms(@QueryParam("titre") String titre, @QueryParam("annee") String annee) {
         if (titre == null) {
-            return "<root response=\"False\"><error>Parameter \"titre\" is required</error></root>";
+            return null; // "<root response=\"False\"><error>Empty query</error></root>";
         } else {
             Client c = ClientBuilder.newClient();
-            WebTarget wt = c.target(API_URL).queryParam("r", "xml").queryParam("s", titre);
+            WebTarget wt = c.target(API_URL).queryParam("s", titre).queryParam("r", "xml");
 
             if (annee != null) {
                 wt = wt.queryParam("y", annee);
             }
 
-            return wt.request(MediaType.APPLICATION_XML).get(String.class);
+            return wt.request(MediaType.APPLICATION_XML).get(DOMSource.class);
         }
     }
 }
