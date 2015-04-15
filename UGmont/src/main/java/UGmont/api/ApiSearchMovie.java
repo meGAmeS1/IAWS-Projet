@@ -1,4 +1,4 @@
-package UGmont;
+package UGmont.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,9 +9,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
 @Path("api")
 public class ApiSearchMovie {
     private static final String API_URL = "http://www.omdbapi.com/?";
@@ -27,7 +24,7 @@ public class ApiSearchMovie {
     @Produces(MediaType.APPLICATION_XML)
     public String getFilms(@QueryParam("titre") String titre, @QueryParam("annee") String annee) {
         if (titre == null) {
-            return "<root response=\"False\"><error>Empty query</error></root>";
+            return "<root response=\"False\"><error>Parameter \"titre\" is required</error></root>";
         } else {
             Client c = ClientBuilder.newClient();
             WebTarget wt = c.target(API_URL).queryParam("r", "xml").queryParam("s", titre);
@@ -38,11 +35,5 @@ public class ApiSearchMovie {
 
             return wt.request(MediaType.APPLICATION_XML).get(String.class);
         }
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public String getIt() {
-        return "<root response=\"False\"><error>No method called</error></root>";
     }
 }
