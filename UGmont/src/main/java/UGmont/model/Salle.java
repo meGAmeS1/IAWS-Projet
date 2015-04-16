@@ -4,12 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by flemoal on 15/04/15.
  */
 @Entity
 @Table(name="SALLE")
+@XmlRootElement(name = "salle")
 public class Salle {
     @Id
     @Column(name="SALLE_ID")
@@ -22,8 +25,9 @@ public class Salle {
     private int nbPlaces;
 
     @Column(name="SUPPORT_3D")
-    private int support3d;
+    private boolean support3d;
 
+    @XmlAttribute(name="id")
     public int getSalleId() {
         return salleId;
     }
@@ -32,6 +36,7 @@ public class Salle {
         this.salleId = salleId;
     }
 
+    @XmlAttribute(name="numero")
     public int getNumeroSalle() {
         return numeroSalle;
     }
@@ -40,6 +45,8 @@ public class Salle {
         this.numeroSalle = numeroSalle;
     }
 
+
+    @XmlAttribute(name="nbPlaces")
     public int getNbPlaces() {
         return nbPlaces;
     }
@@ -48,11 +55,22 @@ public class Salle {
         this.nbPlaces = nbPlaces;
     }
 
-    public int getSupport3d() {
+    @XmlAttribute(name="support3d")
+    public boolean isSupport3d() {
         return support3d;
     }
 
-    public void setSupport3d(int support3d) {
+    public void setSupport3d(boolean support3d) {
         this.support3d = support3d;
+    }
+
+    @Override
+    public String toString() {
+        return "Salle{" +
+                "salleId=" + salleId +
+                ", numeroSalle=" + numeroSalle +
+                ", nbPlaces=" + nbPlaces +
+                ", support3d=" + support3d +
+                '}';
     }
 }

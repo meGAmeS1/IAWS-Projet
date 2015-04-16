@@ -1,5 +1,7 @@
 package UGmont;
 
+import UGmont.database.DbUtil;
+import com.owlike.genson.ext.jaxrs.GensonJsonConverter;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -23,6 +25,7 @@ public class Main {
         // create a resource config that scans for JAX-RS resources and providers
         // in UGmont package
         final ResourceConfig rc = new ResourceConfig().packages("UGmont");
+        rc.register(GensonJsonConverter.class);
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
@@ -35,6 +38,8 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+        DbUtil.getInstance().initializeBase();
+
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
