@@ -1,9 +1,6 @@
 package UGmont.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,6 +23,14 @@ public class Salle {
 
     @Column(name="SUPPORT_3D")
     private boolean support3d;
+
+    @ManyToOne
+    @JoinColumn(name="FILM_ID")
+    private Film film;
+
+    public void setFilm (Film film) {
+        this.film = film;
+    }
 
     @XmlAttribute(name="id")
     public int getSalleId() {
@@ -71,6 +76,7 @@ public class Salle {
                 ", numeroSalle=" + numeroSalle +
                 ", nbPlaces=" + nbPlaces +
                 ", support3d=" + support3d +
+                ", film=" + film +
                 '}';
     }
 }

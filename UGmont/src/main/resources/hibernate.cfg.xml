@@ -12,6 +12,5 @@
 
         <mapping class="UGmont.model.Film"/>
         <mapping class="UGmont.model.Salle"/>
-        <mapping class="UGmont.model.Seance"/>
     </session-factory>
 </hibernate-configuration>

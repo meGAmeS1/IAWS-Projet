@@ -33,4 +33,12 @@ public class Film {
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
     }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "filmId=" + filmId +
+                ", imdbId=" + imdbId +
+                '}';
+    }
 }
