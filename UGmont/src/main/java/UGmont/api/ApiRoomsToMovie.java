@@ -28,7 +28,7 @@ public class ApiRoomsToMovie {
     @GET
     @Path("roomsToMovie")
     @Produces(MediaType.APPLICATION_XML)
-    public String createSeances(@QueryParam("salles") String numeroSalles, @QueryParam("film") String imdbFilm) {
+    public String roomsToMovie(@QueryParam("salles") String numeroSalles, @QueryParam("film") String imdbFilm) {
         if (numeroSalles == null) {
             throw new WebApplicationException("Parameter \"salle\" is required");
         }
