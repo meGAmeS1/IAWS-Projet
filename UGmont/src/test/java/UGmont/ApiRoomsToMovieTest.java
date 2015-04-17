@@ -81,6 +81,12 @@ public class ApiRoomsToMovieTest {
             // La salle doit avoir pour attribut film le film concerne
             System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + salle.toString());
             assertEquals(film, salle.getFilm());
+            assertEquals(true, film.getSalles().contains(salle));
+        }
+
+        System.out.println("Salles du film : ");
+        for (Salle s : film.getSalles()) {
+            System.out.println(s.toString());
         }
 
         session.close();
