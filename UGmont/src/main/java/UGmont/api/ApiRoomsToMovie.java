@@ -43,11 +43,9 @@ public class ApiRoomsToMovie {
         //On cherche le film correspondant a l'imdb
         Query queryFilm = session.createQuery("from Film where imdbId = :imdbId");
         queryFilm.setParameter("imdbId", imdbFilm);
-        List<Film> films = queryFilm.list();
+        Film film = (Film) queryFilm.uniqueResult();
 
-        if (!films.isEmpty()) {
-            Film f = films.get(0);
-
+        if (film != null) {
             for (int i = 0; i < rooms.length; i++) {
 
                 Integer numero = Integer.parseInt(rooms[i]);
@@ -55,15 +53,14 @@ public class ApiRoomsToMovie {
                 //On cherche la salle correspond au numero
                 Query querySalle = session.createQuery("from Salle where numeroSalle = :numeroSalle");
                 querySalle.setParameter("numeroSalle", numero);
-                List<Salle> salles = querySalle.list();
+                Salle salle = (Salle) querySalle.uniqueResult();
 
                 //On assigne le film a la salle
-                if (!salles.isEmpty()) {
-                    Salle s = salles.get(0);
-                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + s.toString());
-                    s.setFilm(f);
-                    session.save(s);
-                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + s.toString());
+                if (salle != null) {
+                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + salle.toString());
+                    salle.setFilm(film);
+                    session.save(salle);
+                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + salle.toString());
                 }
             }
         }
