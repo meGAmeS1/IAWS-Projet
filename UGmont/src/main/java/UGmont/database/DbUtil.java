@@ -2,9 +2,7 @@ package UGmont.database;
 
 import org.h2.tools.RunScript;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -43,10 +41,9 @@ public class DbUtil {
 
     public void initializeBase() {
         try {
-            RunScript.execute(conn, new FileReader("./scriptBdd.sql"));
+            BufferedReader file = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/scriptBdd.sql")));
+            RunScript.execute(conn, file);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
