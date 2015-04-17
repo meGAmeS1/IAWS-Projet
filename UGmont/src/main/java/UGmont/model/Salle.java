@@ -32,6 +32,8 @@ public class Salle {
         this.film = film;
     }
 
+    public Film getFilm() { return film;}
+
     @XmlAttribute(name="id")
     public int getSalleId() {
         return salleId;

@@ -5,10 +5,10 @@ import UGmont.model.Film;
 import UGmont.model.Salle;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 /**
  * Created by Tiska on 16/04/2015.
@@ -37,36 +37,48 @@ public class ApiRoomsToMovie {
         }
 
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
         String[] rooms = numeroSalles.split(",");
 
-        //On cherche le film correspondant a l'imdb
+        // On cherche le film correspondant a l'imdb
         Query queryFilm = session.createQuery("from Film where imdbId = :imdbId");
         queryFilm.setParameter("imdbId", imdbFilm);
         Film film = (Film) queryFilm.uniqueResult();
 
         if (film != null) {
+
             for (int i = 0; i < rooms.length; i++) {
 
-                Integer numero = Integer.parseInt(rooms[i]);
+                int numero = 0;
+                try {
+                    numero = Integer.parseInt(rooms[i]);
+                } catch (NumberFormatException e) {
+                    throw new WebApplicationException(rooms[i] + " should be a number");
+                }
 
-                //On cherche la salle correspond au numero
+                // On cherche la salle correspond au numero
                 Query querySalle = session.createQuery("from Salle where numeroSalle = :numeroSalle");
                 querySalle.setParameter("numeroSalle", numero);
                 Salle salle = (Salle) querySalle.uniqueResult();
 
-                //On assigne le film a la salle
+                // On assigne le film a la salle
                 if (salle != null) {
-                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + salle.toString());
                     salle.setFilm(film);
                     session.save(salle);
-                    System.out.println("Salle " + Integer.parseInt(rooms[i]) + " : " + salle.toString());
+                } else {
+                    session.close();
+                    throw new WebApplicationException("The room " + numero + " doesn't exist");
                 }
             }
+        } else {
+            throw new WebApplicationException("The movie doesn't exist");
         }
+
+        transaction.commit();
         session.close();
 
-        return "<root response=\"true\">Les salles ont été assignées</root>";
+        return "<root>Les salles ont été assignées au film</root>";
     }
 
 }
