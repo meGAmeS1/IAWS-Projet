@@ -23,7 +23,6 @@ public class ApiSearchMovieTest {
 
     private HttpServer server;
     private WebTarget target;
-    private ApiSearchMovie apiSearchMovie;
 
     @Before
     public void setUp() throws Exception {
@@ -40,7 +39,6 @@ public class ApiSearchMovieTest {
 
         target = c.target(Main.BASE_URI);
 
-        apiSearchMovie = new ApiSearchMovie();
     }
 
     @After
@@ -54,7 +52,7 @@ public class ApiSearchMovieTest {
 
         String titre = "Matrix";
         String annee = "2003";
-        DOMSource responseMsg = apiSearchMovie.getFilms(titre, annee);
+        DOMSource responseMsg = target.path("api/films").queryParam("titre", titre).queryParam("annee", annee).request(MediaType.APPLICATION_XML).get(DOMSource.class);
 
         String[][] attributes = {{"Title", titre}, {"Year", annee}};
 
@@ -68,7 +66,7 @@ public class ApiSearchMovieTest {
 
         String titre = "Matrix";
 
-        DOMSource responseMsg = apiSearchMovie.getFilms(titre, null);
+        DOMSource responseMsg = target.path("api/films").queryParam("titre", titre).request(MediaType.APPLICATION_XML).get(DOMSource.class);
 
         String[][] attributes = {{"Title", titre}};
 
@@ -76,14 +74,14 @@ public class ApiSearchMovieTest {
         assertEquals(true, res);
     }
 
-    /* Teste un cas o� il n'y a pas de films*/
+    /* Teste un cas ou il n'y a pas de films*/
     @Test
     public void testNotGetFilms() {
 
         String titre = "Matrix";
         String annee = "1990";
 
-        DOMSource responseMsg = apiSearchMovie.getFilms(titre, annee);
+        DOMSource responseMsg = target.path("api/films").queryParam("titre", titre).queryParam("annee", annee).request(MediaType.APPLICATION_XML).get(DOMSource.class);
 
         boolean res = templateTest(responseMsg, null);
         assertEquals(false,res);
