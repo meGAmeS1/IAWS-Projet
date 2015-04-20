@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Tiska on 17/04/2015.
  */
-public class ApiRoomsToMovieTest {
+public class ApiMovieToRoomsTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -59,7 +59,7 @@ public class ApiRoomsToMovieTest {
 
         String numeroSalles = "1,2,3";
         String imdbFilm = "tt0120737";
-        target.path("api/roomsToMovie").queryParam("salles", numeroSalles).queryParam("film", imdbFilm).request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("salles", numeroSalles).queryParam("film", imdbFilm).request(MediaType.APPLICATION_XML).get(DOMSource.class);
 
         String[] rooms = numeroSalles.split(",");
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -95,30 +95,30 @@ public class ApiRoomsToMovieTest {
     /* Teste le cas ou aucune salle n'est renseignee */
     @Test(expected = WebApplicationException.class)
     public void testRoomsToMovieWithoutRooms() {
-        target.path("api/roomsToMovie").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
     }
 
     /* Teste le cas ou aucun film n'est renseigne */
     @Test(expected = WebApplicationException.class)
     public void testRoomsToMovieWithoutMovie() {
-        target.path("api/roomsToMovie").queryParam("salles", "1,2,3").request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("salles", "1,2,3").request(MediaType.APPLICATION_XML).get(DOMSource.class);
     }
 
     /* Teste le cas ou le film n'existe pas */
     @Test(expected = WebApplicationException.class)
     public void testRoomsToMovieWrongMovie() {
-        target.path("api/roomsToMovie").queryParam("salles", "1,2,3").queryParam("film", "tt0121546").request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("salles", "1,2,3").queryParam("film", "tt0121546").request(MediaType.APPLICATION_XML).get(DOMSource.class);
     }
 
     /* Teste le cas ou le numero d'une salle n'est pas numerique n'existe pas */
     @Test(expected = WebApplicationException.class)
     public void testRoomsToMovieRoomNotNumeric() {
-        target.path("api/roomsToMovie").queryParam("salles", "1a,2,3").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("salles", "1a,2,3").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
     }
 
     /* Teste le cas ou une salle n'existe pas */
     @Test(expected = WebApplicationException.class)
     public void testRoomsToMovieWrongRoom() {
-        target.path("api/roomsToMovie").queryParam("salles", "16,2,3").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
+        target.path("api/movieToRooms").queryParam("salles", "16,2,3").queryParam("film", "tt0120737").request(MediaType.APPLICATION_XML).get(DOMSource.class);
     }
 }

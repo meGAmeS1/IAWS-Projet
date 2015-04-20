@@ -15,9 +15,7 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Path("api")
-public class ApiRoomsToMovie {
-
-    private static final String API_URL = "http://www.omdbapi.com/?";
+public class ApiMovieToRooms {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -26,12 +24,13 @@ public class ApiRoomsToMovie {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Path("roomsToMovie")
+    @Path("movieToRooms")
     @Produces(MediaType.APPLICATION_XML)
-    public String roomsToMovie(@QueryParam("salles") String numeroSalles, @QueryParam("film") String imdbFilm) {
+    public String movieToRooms(@QueryParam("salles") String numeroSalles, @QueryParam("film") String imdbFilm) {
         if (numeroSalles == null) {
-            throw new WebApplicationException("Parameter \"salle\" is required");
+            throw new WebApplicationException("Parameter \"salles\" is required");
         }
+
         if (imdbFilm == null) {
             throw new WebApplicationException("Parameter \"film\" is required");
         }
