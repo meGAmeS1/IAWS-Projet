@@ -13,12 +13,16 @@ import java.util.List;
 public class BackRoomsOfMovie {
 
     public List<Salle> roomsOfMovie(String imdbFilm) {
+
+
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Query querySearchRooms = session.createQuery("from Salle where film.imdbId = :imdbId");
+
         querySearchRooms.setParameter("imdbId", imdbFilm);
 
         List<Salle> salles = querySearchRooms.list();
+        System.out.println("----");
 
         session.close();
 

@@ -33,7 +33,9 @@ public class BackService {
     }
 
     public List<Salle> roomsOfMovie(String imdbFilm) {
+        System.out.println("----");
         return backRoomsOfMovie.roomsOfMovie(imdbFilm);
+
     }
 
     public List<Salle> getSalles(int nbplaces, boolean require3d) {

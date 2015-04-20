@@ -1,0 +1,4 @@
+<RoomsOfMovieRequest xmlns="http://iaws/ws/contractfirst/exemple" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://iaws/ws/contractfirst/exemple RoomsOfMovie.xsd">
+    <film>tt0780504</film>
+</RoomsOfMovieRequest>

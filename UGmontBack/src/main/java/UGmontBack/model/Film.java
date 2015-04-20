@@ -9,6 +9,9 @@ import java.util.Set;
 @Entity
 @Table(name="FILM")
 public class Film {
+
+    public Film (){};
+
     @Id
     @Column(name="FILM_ID")
     private int filmId;
