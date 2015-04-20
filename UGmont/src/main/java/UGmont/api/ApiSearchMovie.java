@@ -1,9 +1,6 @@
 package UGmont.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -25,7 +22,8 @@ public class ApiSearchMovie {
     @Produces(MediaType.APPLICATION_XML)
     public DOMSource getFilms(@QueryParam("titre") String titre, @QueryParam("annee") String annee) {
         if (titre == null) {
-            return null; // "<root response=\"False\"><error>Empty query</error></root>";
+            throw new WebApplicationException("Empty query");
+//            return null; // "<root response=\"False\"><error>Empty query</error></root>";
         } else {
             Client c = ClientBuilder.newClient();
             WebTarget wt = c.target(API_URL).queryParam("s", titre).queryParam("r", "xml");

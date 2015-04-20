@@ -1,9 +1,6 @@
 package UGmont.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -14,6 +11,7 @@ public class Api {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String getIt() {
-        return "<root response=\"False\"><error>No method called</error></root>";
+        throw new WebApplicationException("No method called");
+//        return "<root response=\"False\"><error>No method called</error></root>";
     }
 }
