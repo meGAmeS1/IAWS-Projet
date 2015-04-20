@@ -56,7 +56,6 @@ public class ApiMovieToRoomsTest {
     /* Teste le cas ou salles et film sont renseignes et valides */
     @Test
     public void testMovieToRooms() {
-
         String numeroSalles = "1,2,3";
         String imdbFilm = "tt0120737";
         target.path("api/movieToRooms").queryParam("salles", numeroSalles).queryParam("film", imdbFilm).request(MediaType.APPLICATION_XML).get(DOMSource.class);
@@ -70,7 +69,6 @@ public class ApiMovieToRoomsTest {
         Film film = (Film) queryFilm.uniqueResult();
 
         for (int i = 0; i < rooms.length; i++) {
-
             Integer numero = Integer.parseInt(rooms[i]);
 
             // On cherche la salle correspond au numero
