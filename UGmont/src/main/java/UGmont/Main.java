@@ -1,6 +1,6 @@
 package UGmont;
 
-import UGmont.database.DbUtil;
+import UGmontBack.database.DbUtil;
 import com.owlike.genson.ext.jaxrs.GensonJsonConverter;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;

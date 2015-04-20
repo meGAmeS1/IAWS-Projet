@@ -1,4 +1,4 @@
-package UGmont.database;
+package UGmontBack.database;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;

@@ -1,8 +1,8 @@
 package UGmont;
 
-import UGmont.database.DbUtil;
-import UGmont.database.HibernateUtil;
-import UGmont.model.Salle;
+import UGmontBack.database.DbUtil;
+import UGmontBack.database.HibernateUtil;
+import UGmontBack.model.Salle;
 import org.hibernate.Query;
 import org.hibernate.Session;
 

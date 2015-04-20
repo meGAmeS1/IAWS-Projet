@@ -1,7 +1,7 @@
-package UGmont.api;
+package UGmontBack.back;
 
-import UGmont.database.HibernateUtil;
-import UGmont.model.Salle;
+import UGmontBack.database.HibernateUtil;
+import UGmontBack.model.Salle;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by flemoal on 20/04/15.
  */
-public class ApiRoomsOfMovie {
+public class BackRoomsOfMovie {
 
     public List<Salle> roomsOfMovie(String imdbFilm) {
         if (imdbFilm == null) {

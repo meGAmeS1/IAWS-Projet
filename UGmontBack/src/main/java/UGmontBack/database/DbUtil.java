@@ -1,4 +1,4 @@
-package UGmont.database;
+package UGmontBack.database;
 
 import org.h2.tools.RunScript;
 

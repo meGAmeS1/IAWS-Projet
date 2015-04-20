@@ -1,8 +1,8 @@
-package UGmont.api;
+package UGmontBack.back;
 
-import UGmont.database.HibernateUtil;
-import UGmont.model.Film;
-import UGmont.model.Salle;
+import UGmontBack.database.HibernateUtil;
+import UGmontBack.model.Film;
+import UGmontBack.model.Salle;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
  * Created by Tiska on 16/04/2015.
  */
 
-public class ApiMovieToRooms {
+public class BackMovieToRooms {
     public String movieToRooms(String numeroSalles, String imdbFilm) {
         if (numeroSalles == null) {
             throw new IllegalArgumentException("Parameter \"salles\" is required");

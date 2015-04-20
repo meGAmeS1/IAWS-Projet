@@ -10,7 +10,7 @@
         <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
         <!--         <property name="show_sql">true</property> -->
 
-        <mapping class="UGmont.model.Film"/>
-        <mapping class="UGmont.model.Salle"/>
+        <mapping class="UGmontBack.model.Film"/>
+        <mapping class="UGmontBack.model.Salle"/>
     </session-factory>
 </hibernate-configuration>

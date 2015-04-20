@@ -1,15 +1,15 @@
-package UGmont.api;
+package UGmontBack.back;
 
-import UGmont.database.HibernateUtil;
-import UGmont.model.Salle;
+import UGmontBack.database.HibernateUtil;
+import UGmontBack.model.Salle;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class ApiSearchRoom {
+public class BackSearchRoom {
 
-    public List<Salle> getFilms(String nbplaces, String require3d) {
+    public List<Salle> getSalles(String nbplaces, String require3d) {
         if (nbplaces == null) {
             throw new IllegalArgumentException("Parameter \"nbplaces\" is required");
         }

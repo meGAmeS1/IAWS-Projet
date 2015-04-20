@@ -1,4 +1,4 @@
-package UGmont.model;
+package UGmontBack.model;
 
 import javax.persistence.*;
 import java.util.Set;

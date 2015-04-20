@@ -1,11 +1,12 @@
 package UGmont.api;
 
-import UGmont.database.HibernateUtil;
-import UGmont.model.Salle;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import UGmontBack.model.Salle;
+import UGmontBack.BackService;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -19,19 +20,8 @@ public class ApiRoomsOfMovie {
     @Path("roomsOfMovie")
     @Produces(MediaType.APPLICATION_XML)
     public List<Salle> roomsOfMovie(@QueryParam("film") String imdbFilm) {
-        if (imdbFilm == null) {
-            throw new WebApplicationException("Parameter \"film\" is required");
-        }
+        List<Salle> results = BackService.getInstance().roomsOfMovie(imdbFilm);
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        Query querySearchRooms = session.createQuery("from Salle where film.imdbId = :imdbId");
-        querySearchRooms.setParameter("imdbId", imdbFilm);
-
-        List<Salle> salles = querySearchRooms.list();
-
-        session.close();
-
-        return salles;
+        return results;
     }
 }

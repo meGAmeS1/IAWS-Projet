@@ -1,8 +1,8 @@
-package UGmont.api;
+package UGmontBack.back;
 
 import javax.xml.transform.dom.DOMSource;
 
-public class ApiSearchMovie {
+public class BackSearchMovie {
 
     public DOMSource getFilms(String titre, String annee) {
 //        if (titre == null) {
