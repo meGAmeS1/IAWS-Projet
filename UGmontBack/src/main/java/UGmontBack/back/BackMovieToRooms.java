@@ -7,24 +7,16 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by Tiska on 16/04/2015.
  */
 
 public class BackMovieToRooms {
-    public String movieToRooms(String numeroSalles, String imdbFilm) {
-        if (numeroSalles == null) {
-            throw new IllegalArgumentException("Parameter \"salles\" is required");
-        }
-
-        if (imdbFilm == null) {
-            throw new IllegalArgumentException("Parameter \"film\" is required");
-        }
-
+    public String movieToRooms(List<Integer> salles, String imdbFilm) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-
-        String[] rooms = numeroSalles.split(",");
 
         // On cherche le film correspondant a l'imdb
         Query queryFilm = session.createQuery("from Film where imdbId = :imdbId");
@@ -32,19 +24,10 @@ public class BackMovieToRooms {
         Film film = (Film) queryFilm.uniqueResult();
 
         if (film != null) {
-
-            for (int i = 0; i < rooms.length; i++) {
-
-                int numero = 0;
-                try {
-                    numero = Integer.parseInt(rooms[i]);
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException(rooms[i] + " should be a number");
-                }
-
+            for (Integer numSalle : salles) {
                 // On cherche la salle correspond au numero
                 Query querySalle = session.createQuery("from Salle where numeroSalle = :numeroSalle");
-                querySalle.setParameter("numeroSalle", numero);
+                querySalle.setParameter("numeroSalle", numSalle);
                 Salle salle = (Salle) querySalle.uniqueResult();
 
                 // On assigne le film a la salle
@@ -53,7 +36,7 @@ public class BackMovieToRooms {
                     session.save(salle);
                 } else {
                     session.close();
-                    throw new IllegalArgumentException("The room " + numero + " doesn't exist");
+                    throw new IllegalArgumentException("The room " + numSalle + " doesn't exist");
                 }
             }
         } else {

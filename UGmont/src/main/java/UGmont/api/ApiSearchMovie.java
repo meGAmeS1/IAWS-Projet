@@ -23,7 +23,6 @@ public class ApiSearchMovie {
     public DOMSource getFilms(@QueryParam("titre") String titre, @QueryParam("annee") String annee) {
         if (titre == null) {
             throw new WebApplicationException("Empty query");
-//            return null; // "<root response=\"False\"><error>Empty query</error></root>";
         } else {
             Client c = ClientBuilder.newClient();
             WebTarget wt = c.target(API_URL).queryParam("s", titre).queryParam("r", "xml");

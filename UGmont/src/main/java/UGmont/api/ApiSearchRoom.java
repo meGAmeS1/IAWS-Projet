@@ -3,10 +3,7 @@ package UGmont.api;
 import UGmontBack.model.Salle;
 import UGmontBack.BackService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -25,7 +22,25 @@ public class ApiSearchRoom {
     @Produces(MediaType.APPLICATION_XML)
 //    @Produces(MediaType.TEXT_PLAIN)
     public List<Salle> getSalles(@QueryParam("nbplaces") String nbplaces, @QueryParam("require3d") String require3d) {
-        List<Salle> results = BackService.getInstance().getSalles(nbplaces, require3d);
+        if (nbplaces == null) {
+            throw new WebApplicationException("Parameter \"nbplaces\" is required");
+        }
+
+        int places = 0;
+
+        try {
+            places = Integer.parseInt(nbplaces);
+        } catch (NumberFormatException e) {
+            throw new WebApplicationException("Parameter \"nbplaces\" should be a number");
+        }
+
+        if (places < 0) {
+            throw new WebApplicationException("Parameter \"nbplaces\" should be higher than zero");
+        }
+
+        boolean avec3d = Boolean.parseBoolean(require3d);
+
+        List<Salle> results = BackService.getInstance().getSalles(places, avec3d);
 
         return results;
     }

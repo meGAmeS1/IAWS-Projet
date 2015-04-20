@@ -2,11 +2,10 @@ package UGmont.api;
 
 import UGmontBack.BackService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Tiska on 16/04/2015.
@@ -25,10 +24,32 @@ public class ApiMovieToRooms {
     @Path("movieToRooms")
     @Produces(MediaType.APPLICATION_XML)
     public String movieToRooms(@QueryParam("salles") String numeroSalles, @QueryParam("film") String imdbFilm) {
+        if (numeroSalles == null) {
+            throw new WebApplicationException("Parameter \"salles\" is required");
+        }
 
-        String result = BackService.getInstance().movieToRooms(numeroSalles, imdbFilm);
+        if (imdbFilm == null) {
+            throw new WebApplicationException("Parameter \"film\" is required");
+        }
 
-        return result;
+        String[] rooms = numeroSalles.split(",");
+        List<Integer> salles = new LinkedList<Integer>();
+
+
+        for (String room : rooms) {
+            try {
+                salles.add(Integer.parseInt(room));
+            } catch (NumberFormatException e) {
+                throw new WebApplicationException(room + " should be a number");
+            }
+        }
+
+        try {
+            String result = BackService.getInstance().movieToRooms(salles, imdbFilm);
+            return String.format("<root>%s</root>", result);
+        } catch (IllegalArgumentException e) {
+            throw new WebApplicationException(e);
+        }
     }
 
 }

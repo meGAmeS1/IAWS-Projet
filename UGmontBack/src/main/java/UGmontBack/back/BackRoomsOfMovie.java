@@ -13,10 +13,6 @@ import java.util.List;
 public class BackRoomsOfMovie {
 
     public List<Salle> roomsOfMovie(String imdbFilm) {
-        if (imdbFilm == null) {
-            throw new IllegalArgumentException("Parameter \"film\" is required");
-        }
-
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Query querySearchRooms = session.createQuery("from Salle where film.imdbId = :imdbId");

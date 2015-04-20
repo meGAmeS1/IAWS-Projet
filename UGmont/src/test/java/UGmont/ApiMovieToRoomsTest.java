@@ -55,7 +55,7 @@ public class ApiMovieToRoomsTest {
 
     /* Teste le cas ou salles et film sont renseignes et valides */
     @Test
-    public void testRoomsToMovie() {
+    public void testMovieToRooms() {
 
         String numeroSalles = "1,2,3";
         String imdbFilm = "tt0120737";
